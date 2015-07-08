@@ -3,7 +3,9 @@
 local apiCalls = {
   terminate = { -- Terminate the running program.
     called = function()
-      events.terminate()
+      if type(events.terminate) == "function" then
+        events.terminate()
+      end
       os.exit()
     end
   },
