@@ -1,0 +1,131 @@
+-- Filesystem manager --
+
+local openFiles = {}
+
+local function parsePath(path) -- Parse a string path into its drive, directories, the basename, and the extension (using the current drive and path if applicable).
+  local drive = string.match(path, "^([a-zA-Z]):") or currentDrive -- Match the drive.
+
+  local dirs = {}
+  for seperator, dir in string.gmatch(path, "(\\\\)?(\\w{1,8})\\\\") do -- Get the directories it's in.
+    if seperator == "" then -- Add the current directory if there is no seperator at the beginning of the path.
+      for currentDirElement in string.gmatch(currentDirs[currentDrive], "\\\\(\\w{1,8})\\\\") do
+        table.insert(dirs, currentDirElement)
+      end
+    end
+    table.insert(dirs, dir)
+  end
+
+  if #dirs == 0 then -- Add the current directory if path has no directories.
+    for currentDirElement in string.gmatch(currentDirs[currentDrive], "\\\\(\\w{1,8})\\\\") do
+      table.insert(dirs, currentDirElement)
+    end
+  end
+
+  local name = string.match(path, "\\\\?(\\w{1,8)\\.")
+
+  local ext = string.match(path, "\\.(\\w{1,3})$")
+
+  return {
+    drive = drive,
+    dirs = dirs,
+    basename = name,
+    extension = ext
+  }
+end
+
+local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS path, when appropriate.
+  if drives[pathObj.drive].type ~= "dir" then
+    error("Not a physical drive.")
+  end
+  local biosPath = drives[pathObj.drive].dir
+  for index, dir in ipairs(pathObj.dirs) do
+    biosPath = fs.concat(biosPath, dir)
+  end
+  if basename ~= "" and basename ~= nil then -- Don't go insane for directories.
+    biosPath = fs.concat(biosPath, pathObj.basename)
+    biosPath += ".l"
+    biosPath += pathObj.extension
+  end
+  return biosPath
+end
+
+local function fopen(path, mode) -- Opens a file.
+  local pathObj = parsePath(path)
+  if drives[pathObj.drive].type ~= "dir" then -- If the drive isn't directory-based...
+    table.insert(openFiles, drives[pathObj.drive].open(pathObj)) -- Open the file using the function associated with the drive.
+  else
+    local biosPath = convertPath(pathObj) -- Convert the path to a BIOS path.
+    table.insert(fs.open(biosPath), mode) -- Open it using fs.open().
+  end
+  return table.maxn(openFiles)
+end
+
+local function fclose(handle) -- Closes an open file. Returns true for success, false for failure.
+  if openFiles[handle] ~= nil then
+    openFiles[handle].close()
+    return true
+  else
+    return false
+  end
+end
+
+local function fread(handle, byte, all) -- Reads a byte from, line from, or all of an open file. Returns the read value, nil for failure.
+  if openFiles[handle] ~= nil then
+    if byte then
+      return openFiles[handle].read()
+    elseif all then
+      return openFiles[handle].readAll()
+    else
+      return openFiles[handle].readLine()
+    end
+  else
+    return nil
+  end
+end
+
+local function fwrite(handle, data) -- Closes an open file. Returns true for success, false for failure.
+  if openFiles[handle] ~= nil then
+    openFiles[handle].write(data)
+    return true
+  else
+    return false
+  end
+end
+
+local function fdelete(path) -- Deletes the specified file or directory.
+  local pathObj = parsePath(path)
+  if drives[pathObj.drive].type ~= "dir" then
+    drives[pathObj.drive].delete(pathObj)
+  else
+    fs.delete(convertPath(pathObj))
+  end
+end
+
+local function fmove(path, newPath) -- Moves the specified file or directory to a new location.
+  local pathObj = parsePath(path)
+  local newPathObj = parsePath(newPath)
+  if drives[pathObj.drive].type ~= "dir" then
+    drives[pathObj.drive].move(pathObj, newPath)
+  else
+    fs.move(convertPath(pathObj), convertPath(newPathObj))
+  end
+end
+
+local function fmove(path, newPath) -- Copies the specified file or directory to a new location.
+  local pathObj = parsePath(path)
+  local newPathObj = parsePath(newPath)
+  if drives[pathObj.drive].type ~= "dir" then
+    drives[pathObj.drive].copy(pathObj, newPath)
+  else
+    fs.copy(convertPath(pathObj), convertPath(newPathObj))
+  end
+end
+
+local function fsize(path) -- Returns the size of the specified file, in bytes.
+  return fs.size(convertPath(parsePath(path)))
+end
+
+local function mkdir(path) -- Creates a directory.
+  biosPath = convertPath(parsePath(path))
+  fs.makeDir(biosPath)
+end
