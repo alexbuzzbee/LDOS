@@ -1,0 +1,11 @@
+-- LDOS boot sector: finds and loads LDOS.SYS
+
+local dir = fs.getDir(shell.getRunningProgram())
+
+if fs.exists(fs.concat(dir, "ldos.lsys")) then
+  shell.run(fs.concat(dir, "ldos.lsys"))
+elseif fs.exists(fs.concat(dir, "ldos.sys")) then
+  shell.run(fs.concat(dir, "ldos.sys"))
+else
+  error("Could not find LDOS.SYS! (Hint: It needs to be in the root directory of your boot disk.)")
+end
