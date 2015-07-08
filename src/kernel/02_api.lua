@@ -19,13 +19,13 @@ local apiCalls = {
     called = print
   },
   openFile = { -- Open a file.
-    called = function(path) return fopen(path) end
+    called = function(path, mode) return fopen(path, mode) end
   },
   closeFile = { -- Close an opened file.
     called = function(handle) return fclose(handle) end
   },
   readFile = { -- Reads from a file.
-    called = function(handle, size) return fread(handle, size) end
+    called = function(handle, byte, all) return fread(handle, byte, all) end
   },
   writeFile = { -- Writes to a file.
     called = function(handle, data) return fwrite(handle, data) end
@@ -35,6 +35,9 @@ local apiCalls = {
   },
   moveFile = { -- Move a file.
     called = function(path, newPath) return fmove(path, newPath) end
+  },
+  copyFile = {
+    called = function(path, toPath) return fcopy(path, toPath) end
   },
   createDir = {
     called = function(path) return mkdir(path) end
