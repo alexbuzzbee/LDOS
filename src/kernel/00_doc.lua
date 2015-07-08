@@ -1,3 +1,1 @@
 -- LDOS.SYS: the LDOS kernel
-
--- TODO: Write kernel
