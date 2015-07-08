@@ -43,8 +43,8 @@ local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS pat
   end
   if basename ~= "" and basename ~= nil then -- Don't go insane for directories.
     biosPath = fs.concat(biosPath, pathObj.basename)
-    biosPath += ".l"
-    biosPath += pathObj.extension
+    biosPath = biosPath .. ".l"
+    biosPath = biosPath .. pathObj.extension
   end
   return biosPath
 end
@@ -128,4 +128,12 @@ end
 local function mkdir(path) -- Creates a directory.
   biosPath = convertPath(parsePath(path))
   fs.makeDir(biosPath)
+end
+
+local function drvSpace(drive)
+  if drives[drive].type == "dir" then
+    fs.getFreeSpace(drives[drive].dir)
+  else
+    drives[drive].space()
+  end
 end
