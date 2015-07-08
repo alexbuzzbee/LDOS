@@ -35,8 +35,8 @@ local configDirectives = { -- CONFIG.SYS directives.
   device = { -- Loads a device driver.
     invoke = function(restOfLine)
       local args = {}
-      for i in string.gmatch(restOfLine) do
-        table.insert(args, i)
+      for arg in string.gmatch(restOfLine) do
+        table.insert(args, arg)
       end
       loadDriver(table.unpack(args))
     end
