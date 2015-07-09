@@ -41,6 +41,20 @@ local configDirectives = { -- CONFIG.SYS directives.
       loadDriver(table.unpack(args))
     end
   },
+  SHELL = { -- Sets the shell.
+    invoke = function(restOfLine)
+      environment.SHELL = restOfLine
+    end
+  },
+  SET = {
+    invoke = function(restOfLine)
+      local args = {}
+      for arg in string.gmatch(restOfLine, "\\s(.*?)|(.*?)\\s") do
+        table.insert(args, arg)
+      end
+      environment[args[1]] = table.concat(args, " ", 2) -- Concatinates the arguments together with spaces, then puts it in the specified environment variable.
+    end
+  },
 }
 
 local events = { -- Association of string names to function handlers.
