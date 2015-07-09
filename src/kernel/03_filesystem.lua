@@ -43,7 +43,7 @@ local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS pat
   end
   if basename ~= "" and basename ~= nil then -- Don't go insane for directories.
     biosPath = fs.concat(biosPath, pathObj.basename)
-    biosPath = biosPath .. ".l"
+    biosPath = biosPath .. ".L"
     biosPath = biosPath .. pathObj.extension
   end
   return biosPath
