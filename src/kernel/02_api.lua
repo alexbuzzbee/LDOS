@@ -94,7 +94,7 @@ local apiCalls = {
   },
   execute = { -- Executes a program.
     called = executeProgram
-  }
+  },
 }
 
 local function executeProgram(path) -- Executes the specified program.

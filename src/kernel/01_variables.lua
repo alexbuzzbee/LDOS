@@ -6,18 +6,18 @@ local version = {major = 0, minor = 1, fix = 0}
   There are two types of drive: dir (simply a physical directory) and funcs (a group of functions provides the drive's functionality).
 ]]
 local drives = { -- Drives; defaults to A (/disk), B (/disk2), and C (/).
-  a = {
+  A = {
     type = "dir",
     dir = "/disk"
   },
-  b = {
+  B = {
     type = "dir",
     dir = "/disk2"
   },
-  c = {
+  C = {
     type = "dir",
     dir = "/"
-  }
+  },
 }
 
 local devices = { -- Device virtual files.
@@ -28,7 +28,7 @@ local devices = { -- Device virtual files.
   CON = {
     write = function(value) print(value) end,
     read = function() return read() end
-  }
+  },
 }
 
 local configDirectives = { -- CONFIG.SYS directives.
@@ -40,17 +40,17 @@ local configDirectives = { -- CONFIG.SYS directives.
       end
       loadDriver(table.unpack(args))
     end
-  }
+  },
 }
 
 local events = { -- Association of string names to function handlers.
   terminate = nil, -- When the running program terminates.
 }
 
-local currentDrive = "c" -- The current drive.
+local currentDrive = "C" -- The current drive.
 
 local currentDirs = {
-  a = "\\",
-  b = "\\",
-  c = "\\"
+  A = "\\",
+  B = "\\",
+  C = "\\",
 }
