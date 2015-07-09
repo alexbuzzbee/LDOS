@@ -105,7 +105,7 @@ local function executeProgram(path) -- Executes the specified program.
   end
 end
 
-function dos(callName, ...)
+function dos(callName, ...) -- Calls the LDOS API.
   if apiCalls[callName] ~= null then
     return apiCalls[callName](...)
   else
