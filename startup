@@ -7,5 +7,5 @@ if fs.exists(fs.concat(dir, "ldos.lsys")) then
 elseif fs.exists(fs.concat(dir, "ldos.sys")) then
   shell.run(fs.concat(dir, "ldos.sys"))
 else
-  error("Could not find LDOS.SYS! (Hint: It needs to be in the root directory of your boot disk.)")
+  error("Could not find LDOS.SYS! (Hint: it needs to be in the root directory of your boot disk.)")
 end
