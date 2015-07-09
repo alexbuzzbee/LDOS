@@ -50,6 +50,12 @@ local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS pat
 end
 
 local function fopen(path, mode) -- Opens a file.
+  for name, device in pairs(devices) do -- Handle device virtual files.
+    if path == name then
+      table.insert(openFiles, devices[name])
+      return table.maxn(openFiles)
+    end
+  end
   local pathObj = parsePath(path)
   if drives[pathObj.drive].type ~= "dir" then -- If the drive isn't directory-based...
     table.insert(openFiles, drives[pathObj.drive].open(pathObj)) -- Open the file using the function associated with the drive.

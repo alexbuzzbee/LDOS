@@ -24,10 +24,12 @@ local devices = { -- Device virtual files.
   NUL = {
     write = function() end,
     read = function() return "" end
+    close = function() end
   },
   CON = {
     write = function(value) print(value) end,
     read = function() return read() end
+    close = function() end
   },
 }
 
