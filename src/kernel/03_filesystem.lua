@@ -26,10 +26,10 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
   local ext = string.match(path, "\\.(\\w{1,3})$")
 
   return {
-    drive = drive,
-    dirs = dirs,
-    basename = name,
-    extension = ext
+    drive = string.upper(drive),
+    dirs = string.upper(dirs),
+    basename = string.upper(name),
+    extension = string.upper(ext)
   }
 end
 
