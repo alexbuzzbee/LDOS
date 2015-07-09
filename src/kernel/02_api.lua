@@ -92,6 +92,12 @@ local apiCalls = {
   getVersion = { -- Returns the LDOS version.
     called = function() return version end
   },
+  getEnv = { -- Returns the value of the specified environment variable.
+    called = function(name) return environment[name] end
+  },
+  setEnv = { -- Sets an environment variable.
+    called = function(name, value) environment[name] = value end
+  },
   execute = { -- Executes a program.
     called = executeProgram
   },

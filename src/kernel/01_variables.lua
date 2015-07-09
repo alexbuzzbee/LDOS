@@ -54,3 +54,7 @@ local currentDirs = {
   B = "\\",
   C = "\\",
 }
+
+local environment = { -- Environment variables. Shared between all programs.
+  SHELL = "\\COMMAND.COM", -- The set shell. Started when no other programs are running.
+}
