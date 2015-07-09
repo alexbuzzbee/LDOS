@@ -63,7 +63,7 @@ local events = { -- Association of string names to function handlers.
   terminate = nil, -- When the running program terminates.
 }
 
-local currentDrive = "C" -- The current drive.
+local currentDrive = "" -- The current drive.
 
 local currentDirs = {
   A = "\\",
@@ -73,4 +73,5 @@ local currentDirs = {
 
 local environment = { -- Environment variables. Shared between all programs.
   SHELL = "\\COMMAND.COM", -- The set shell. Started when no other programs are running.
+  BOOTDRIVE = "", -- The boot drive.
 }
