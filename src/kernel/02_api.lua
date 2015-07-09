@@ -93,6 +93,19 @@ local apiCalls = {
     called = function() return version end
   },
   execute = { -- Executes a program.
-    called = shell.run
+    called = executeProgram
   }
 }
+
+local function executeProgram(path) -- Executes the specified program.
+  local biosPath = convertPath(parsePath())
+  os.run({}, biosPath)
+end
+
+function dos(callName, ...)
+  if apiCalls[callName] ~= null then
+    return apiCalls[callName](...)
+  else
+    error("No such API call: '" .. callName .. "'.")
+  end
+end
