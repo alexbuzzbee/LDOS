@@ -98,8 +98,11 @@ local apiCalls = {
 }
 
 local function executeProgram(path) -- Executes the specified program.
-  local biosPath = convertPath(parsePath())
-  os.run({}, biosPath)
+  local pathObj = parsePath()
+  local biosPath = convertPath(pathObj)
+  if pathObj.ext == "EXE" or pathObj.ext == "COM" then
+    os.run({}, biosPath)
+  end
 end
 
 function dos(callName, ...)
