@@ -32,7 +32,7 @@ local devices = { -- Device virtual files.
 }
 
 local configDirectives = { -- CONFIG.SYS directives.
-  device = { -- Loads a device driver.
+  DEVICE = { -- Loads a device driver.
     invoke = function(restOfLine)
       local args = {}
       for arg in string.gmatch(restOfLine) do
