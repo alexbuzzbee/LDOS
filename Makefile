@@ -5,7 +5,7 @@ build: ldos.lsys
 rebuild: clean build
 
 clean:
-	rm ldos.lsys
+	rm LDOS.LSYS
 
-ldos.lsys: ${SOURCES}
-	cat src/kernel/*.lua > ldos.lsys
+LDOS.LSYS: ${SOURCES}
+	cat src/kernel/*.lua > LDOS.LSYS
