@@ -4,7 +4,7 @@ local internalCommands = {
   DIR = { -- Displays a directory listing.
     exec = function(params)
       local files, totalSize, dirs = 0, 0, 0
-      for i, entry in ipairs(dos("getDirContents", params[1])) do
+      for _, entry in ipairs(dos("getDirContents", params[1])) do
         dos("writeTerm", entry.name .. "\t")
         if entry.type == "file" then
           dos("writeTerm", entry.ext .. "\t\t" .. entry.size .. "\n")
