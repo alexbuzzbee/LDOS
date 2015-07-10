@@ -54,7 +54,7 @@ local apiCalls = {
   chDrive = { -- Change the current drive.
     called = function(new)
       if string.length(new) == 1 then
-        currentDrive = string.lower(new)
+        currentDrive = string.upper(new)
       end
     end
   },
