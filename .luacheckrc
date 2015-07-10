@@ -1,0 +1,40 @@
+globals = {
+  "read",
+  "term",
+  "fs",
+  "coroutine",
+  "shell",
+  "peripheral",
+  "dos",
+}
+
+files["src/kernel/"] = {
+  globals = {
+    "executeProgram",
+    "apiCalls",
+    "version",
+    "drives",
+    "devices",
+    "configDirectives",
+    "events",
+    "currentDrive",
+    "currentDirs",
+    "environment",
+    "parsePath",
+    "convertPath",
+    "fopen",
+    "fclose",
+    "fread",
+    "fwrite",
+    "fdelete",
+    "fmove",
+    "fcopy",
+    "fsize",
+    "mkdir",
+    "drvSpace",
+    "driverApiCalls",
+    "driverCall",
+    "loadDriver",
+    "parseConfig",
+  }
+}
