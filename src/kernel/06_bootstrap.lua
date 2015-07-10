@@ -1,7 +1,7 @@
 -- Bootstrap --
 
 local function boot() -- Boots LDOS.
-  local bootDir = fs.getDir(shell.getRunningProgram()) -- Get the BIOS path to the directory
+  local bootDir = "/" .. fs.getDir("/" .. shell.getRunningProgram()) -- Get the BIOS path to the directory (the '"/" .. 's are because shell.getRunningProgram() returns a path without a /).
   for letter, table in pairs(drives) do
     if table.type == "dir" and table.dir == bootDir then
       currentDrive = letter
