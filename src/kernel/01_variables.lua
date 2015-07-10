@@ -18,6 +18,10 @@ local drives = { -- Drives; defaults to A (/disk), B (/disk2), and C (/).
     type = "dir",
     dir = "/"
   },
+  Z = {
+    type = "dir",
+    dir = "/rom"
+  },
 }
 
 local devices = { -- Device virtual files.
