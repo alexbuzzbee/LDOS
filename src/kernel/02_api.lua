@@ -15,8 +15,8 @@ local apiCalls = {
   readTermNoEcho = { -- Read from the terminal without echoing.
     called = function() return read("") end
   },
-  writeTerm = { -- Write to the terminal.
-    called = print
+  writeTerm = { -- Write to the terminal. Does not add a newline to the end.
+    called = term.write
   },
   openFile = { -- Open a file.
     called = function(path, mode) return fopen(path, mode) end
