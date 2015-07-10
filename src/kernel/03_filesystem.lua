@@ -9,10 +9,10 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
   for seperator, dir in string.gmatch(path, "(\\\\)?(\\w{1,8})\\\\") do -- Get the directories it's in.
     if seperator == "" then -- Add the current directory if there is no seperator at the beginning of the path.
       for currentDirElement in string.gmatch(currentDirs[currentDrive], "\\\\(\\w{1,8})\\\\") do
-        table.insert(dirs, currentDirElement)
+        table.insert(dirs, string.upper(currentDirElement))
       end
     end
-    table.insert(dirs, dir)
+    table.insert(dirs, string.upper(dir))
   end
 
   if #dirs == 0 then -- Add the current directory if path has no directories.
@@ -27,7 +27,6 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
 
   return {
     drive = string.upper(drive),
-    dirs = string.upper(dirs),
     basename = string.upper(name),
     extension = string.upper(ext)
   }
