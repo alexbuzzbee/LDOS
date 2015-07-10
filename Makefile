@@ -13,4 +13,4 @@ LDOS.LSYS: ${KERNEL_SOURCES}
 	cat src/kernel/*.lua > LDOS.LSYS
 
 COMMAND.LCOM: ${SHELL_SOURCES}
-	cat src/shell/*.lua > LDOS.LSYS
+	cat src/shell/*.lua > COMMAND.LCOM
