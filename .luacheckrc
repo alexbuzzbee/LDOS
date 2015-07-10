@@ -38,3 +38,12 @@ files["src/kernel/"] = {
     "parseConfig",
   }
 }
+
+files["src/shell/"] = {
+  globals = {
+    "displayPrompt",
+    "internalCommands",
+    "getCommand",
+    "processCommand",
+  }
+}
