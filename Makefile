@@ -1,6 +1,6 @@
 SOURCES = $(wildcard "src/kernel/*.lua")
 
-build: ldos.lsys
+build: LDOS.LSYS
 
 rebuild: clean build
 
