@@ -41,7 +41,7 @@ local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS pat
   for index, dir in ipairs(pathObj.dirs) do
     biosPath = fs.concat(biosPath, dir)
   end
-  if basename ~= "" and basename ~= nil then -- Don't go insane for directories.
+  if pathObj.basename ~= "" and pathObj.basename ~= nil then -- Don't go insane for directories.
     biosPath = fs.concat(biosPath, pathObj.basename)
     biosPath = biosPath .. ".L"
     biosPath = biosPath .. pathObj.extension
@@ -52,7 +52,7 @@ end
 local function fopen(path, mode) -- Opens a file.
   for name, device in pairs(devices) do -- Handle device virtual files.
     if path == name then
-      table.insert(openFiles, devices[name])
+      table.insert(openFiles, device)
       return table.maxn(openFiles)
     end
   end
@@ -117,7 +117,7 @@ local function fmove(path, newPath) -- Moves the specified file or directory to 
   end
 end
 
-local function fmove(path, newPath) -- Copies the specified file or directory to a new location.
+local function fcopy(path, newPath) -- Copies the specified file or directory to a new location.
   local pathObj = parsePath(path)
   local newPathObj = parsePath(newPath)
   if drives[pathObj.drive].type ~= "dir" then
@@ -132,7 +132,7 @@ local function fsize(path) -- Returns the size of the specified file, in bytes.
 end
 
 local function mkdir(path) -- Creates a directory.
-  biosPath = convertPath(parsePath(path))
+  local biosPath = convertPath(parsePath(path))
   fs.makeDir(biosPath)
 end
 

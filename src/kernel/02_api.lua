@@ -63,9 +63,7 @@ local apiCalls = {
   },
   chDirForDrive = { -- Change directory on a given drive.
     called = function(new, drive)
-      if checkDir(new, drive) then
-        currentDirs[drive] = new
-      end
+      currentDirs[drive] = new
     end
   },
   chDir = { -- Change directory on the current drive.
