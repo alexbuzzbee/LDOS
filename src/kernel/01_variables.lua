@@ -27,12 +27,12 @@ local drives = { -- Drives; defaults to A (/disk), B (/disk2), and C (/).
 local devices = { -- Device virtual files.
   NUL = {
     write = function() end,
-    read = function() return "" end
+    read = function() return "" end,
     close = function() end
   },
   CON = {
     write = function(value) print(value) end,
-    read = function() return read() end
+    read = function() return read() end,
     close = function() end
   },
 }
