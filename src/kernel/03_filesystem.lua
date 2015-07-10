@@ -27,6 +27,7 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
 
   return {
     drive = string.upper(drive),
+    dirs = dirs,
     basename = string.upper(name),
     extension = string.upper(ext)
   }
