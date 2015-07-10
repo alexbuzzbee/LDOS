@@ -5,4 +5,6 @@ local function getCommand()
   return dos("readTerm")
 end
 
-local function 
+local function processCommand()
+
+end
