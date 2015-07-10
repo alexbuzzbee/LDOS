@@ -42,6 +42,9 @@ local apiCalls = {
   createDir = {
     called = function(path) return mkdir(path) end
   },
+  getDirContents = { -- Get a list of files/directories in the current directory.
+    called = function(path) return dirContents(path) end
+  },
   getFileSize = { -- Returns the size of the specified file.
     called = function(path) return fsize(path) end
   },

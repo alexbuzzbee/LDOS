@@ -136,6 +136,10 @@ local function mkdir(path) -- Creates a directory.
   fs.makeDir(biosPath)
 end
 
+local function dirContents(path) -- Returns a list of files and directories in `path`.
+
+end
+
 local function drvSpace(drive)
   if drives[drive].type == "dir" then
     fs.getFreeSpace(drives[drive].dir)
