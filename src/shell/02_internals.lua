@@ -18,4 +18,9 @@ local internalCommands = {
       dos("writeTerm", "\t" .. dirs .. "Dir(s)" .. "\t" .. dos("getSpaceForDrive", dos("parsePath", params[1])) --[[Gets free space for the drive containing the dir we're listing]] .. " Bytes free.\n")
     end
   },
+  CD = { -- Changes directory on the current drive.
+    exec = function(params)
+      dos("chDir", params[0])
+    end
+  },
 }
