@@ -59,7 +59,7 @@ local apiCalls = {
     called = function() return currentDrive end
   },
   getSpaceForDrive = { -- Returns the amount of free space, in bytes, on the specified drive.
-    called = function(drive) return drvSpace(string.lower(drive)) end
+    called = function(drive) return drvSpace(string.upper(drive)) end
   },
   chDirForDrive = { -- Change directory on a given drive.
     called = function(new, drive)
