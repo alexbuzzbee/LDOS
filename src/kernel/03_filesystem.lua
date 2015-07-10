@@ -49,6 +49,22 @@ local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS pat
   return biosPath
 end
 
+local function reverseConvertPath(path) -- Converts a BIOS path to an LDOS path string.
+  local drive = ""
+  local driveDir = ""
+  for letter, tbl in pairs(drives) do
+    if tbl.type == "dir" and string.length(tbl.dir) < string.length(driveDir) and string.match(path, tbl.dir .. ".*") ~= nil then -- Huge complex conditional to check if it's the right drive.
+      drive = letter
+      driveDir = tbl.dir
+    end
+  end
+  local ldosPath = drive .. ":"
+  local pathInDrive = string.match(path, driveDir .. "(.*)") -- Get the path inside the drive.
+  local ldosDriveLocalPath = string.sub(pathInDrive, "/", "\\\\") -- Replace all forward slashes with backslashes.
+  ldosPath = ldosPath .. string.sub(ldosDriveLocalPath, "\\.L", "\\.")
+  return ldosPath
+end
+
 local function fopen(path, mode) -- Opens a file.
   for name, device in pairs(devices) do -- Handle device virtual files.
     if path == name then
@@ -137,7 +153,28 @@ local function mkdir(path) -- Creates a directory.
 end
 
 local function dirContents(path) -- Returns a list of files and directories in `path`.
-
+  local contents = {}
+  for i, item in ipairs(fs.list(convertPath(parsePath(path)))) do
+    local itemBiosPath = fs.concat(path, item) -- Get the full BIOS path to the item.
+    local itemLdosPath = reverseConvertPath(itemBiosPath) -- Get the full LDOS path to the item.
+    local itemLdosPathObj = parsePath(itemLdosPath) -- Get the LDOS path object to the item.
+    local itemType
+    if fs.isDir(item) then -- Set the item's type.
+      itemType = "dir"
+    else
+      itemType = "file"
+    end
+    contents[i] = { -- Create a table to represent the item.
+      path = itemLdosPath,
+      name = itemLdosPathObj.basename,
+      type = itemType,
+    }
+    if itemType == "file" then -- Add extra info about files.
+      contents[i].size = fs.size(itemBiosPath)
+      contents[i].ext = itemLdosPathObj.ext
+    end
+  end
+  return contents
 end
 
 local function drvSpace(drive)

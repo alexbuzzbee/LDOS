@@ -8,11 +8,11 @@ local version = {major = 0, minor = 1, fix = 0}
 local drives = { -- Drives; defaults to A (/disk), B (/disk2), and C (/).
   A = {
     type = "dir",
-    dir = "/disk"
+    dir = "/disk/"
   },
   B = {
     type = "dir",
-    dir = "/disk2"
+    dir = "/disk2/"
   },
   C = {
     type = "dir",
@@ -20,7 +20,7 @@ local drives = { -- Drives; defaults to A (/disk), B (/disk2), and C (/).
   },
   Z = {
     type = "dir",
-    dir = "/rom"
+    dir = "/rom/"
   },
 }
 
