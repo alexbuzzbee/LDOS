@@ -3,7 +3,7 @@
 local version = {major = 0, minor = 1, fix = 0}
 
 --[[
-  There are two types of drive: dir (simply a physical directory) and funcs (a group of functions provides the drive's functionality).
+  There is one LDOS-defined drive type: dir, which is simply a physical directory.
 ]]
 local drives = { -- Drives; defaults to A (/disk), B (/disk2), and C (/).
   A = {
