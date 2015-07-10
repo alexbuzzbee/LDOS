@@ -159,16 +159,19 @@ local function dirContents(path) -- Returns a list of files and directories in `
     local itemLdosPath = reverseConvertPath(itemBiosPath) -- Get the full LDOS path to the item.
     local itemLdosPathObj = parsePath(itemLdosPath) -- Get the LDOS path object to the item.
     local itemType
+
     if fs.isDir(item) then -- Set the item's type.
       itemType = "dir"
     else
       itemType = "file"
     end
+
     contents[i] = { -- Create a table to represent the item.
       path = itemLdosPath,
       name = itemLdosPathObj.basename,
       type = itemType,
     }
+    
     if itemType == "file" then -- Add extra info about files.
       contents[i].size = fs.size(itemBiosPath)
       contents[i].ext = itemLdosPathObj.ext
