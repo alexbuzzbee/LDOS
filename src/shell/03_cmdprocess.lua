@@ -11,6 +11,10 @@ local function processCommand(line)
     words[position] = word
   end
   local command = table.remove(words, 1) -- Get the command itself.
+  if string.match(command, "^[a-zA-Z]:$") then -- Change drive commands.
+    dos("chDrive", string.match(command, "^([a-zA-Z]):$"))
+    return true
+  end
   for internal, table in pairs(internalCommands) do -- Try internal commands.
     if internal == command then
       table.exec(words) -- Run the internal command.
