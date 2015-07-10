@@ -39,10 +39,10 @@ local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS pat
   end
   local biosPath = drives[pathObj.drive].dir
   for index, dir in ipairs(pathObj.dirs) do
-    biosPath = fs.concat(biosPath, dir)
+    biosPath = fs.combine(biosPath, dir)
   end
   if pathObj.basename ~= "" and pathObj.basename ~= nil then -- Don't go insane for directories.
-    biosPath = fs.concat(biosPath, pathObj.basename)
+    biosPath = fs.combine(biosPath, pathObj.basename)
     biosPath = biosPath .. ".L"
     biosPath = biosPath .. pathObj.extension
   end
@@ -155,7 +155,7 @@ end
 local function dirContents(path) -- Returns a list of files and directories in `path`.
   local contents = {}
   for i, item in ipairs(fs.list(convertPath(parsePath(path)))) do
-    local itemBiosPath = fs.concat(path, item) -- Get the full BIOS path to the item.
+    local itemBiosPath = fs.combine(path, item) -- Get the full BIOS path to the item.
     local itemLdosPath = reverseConvertPath(itemBiosPath) -- Get the full LDOS path to the item.
     local itemLdosPathObj = parsePath(itemLdosPath) -- Get the LDOS path object to the item.
     local itemType
@@ -171,7 +171,7 @@ local function dirContents(path) -- Returns a list of files and directories in `
       name = itemLdosPathObj.basename,
       type = itemType,
     }
-    
+
     if itemType == "file" then -- Add extra info about files.
       contents[i].size = fs.size(itemBiosPath)
       contents[i].ext = itemLdosPathObj.ext
