@@ -70,13 +70,13 @@ local apiCalls = {
     end
   },
   chDir = { -- Change directory on the current drive.
-    called = function(new) apiCalls.chDirForDrive(new, currentDrive) end
+    called = function(new) currentDirs[currentDrive] = new end
   },
   getDirForDrive = { -- Returns the current directory on a given drive.
     called = function(drive) return currentDirs[drive] end
   },
   getDir = { -- Returns the current directory on the current drive.
-    called = function() return apiCalls.getDirForDrive(currentDrive) end
+    called = function() return currentDirs[currentDrive] end
   },
   on = { -- Set the handler for an event.
     called = function(name, callback) events[name] = callback end
