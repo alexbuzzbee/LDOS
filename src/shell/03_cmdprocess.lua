@@ -7,8 +7,10 @@ end
 
 local function processCommand(line)
   local words = {}
-  for position, word in string.gmatch(line, "\\s(.*?)|(.*?)\\s") do -- Break the line up into words.
-    words[position] = word
+  local i = 1
+  for word in string.gmatch(line, "([^ ]+)") do -- Break the line up into words.
+    words[i] = word
+    i = i + 1
   end
   local command = table.remove(words, 1) -- Get the command itself.
   if string.match(command, "^[a-zA-Z]:$") then -- Change drive commands.
