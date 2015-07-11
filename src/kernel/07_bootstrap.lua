@@ -9,14 +9,11 @@ local function boot() -- Boots LDOS.
       environment.BOOTDRIVE = letter
     end
   end
-  print("Booting from " .. currentDrive .. ":")
   if currentDrive == "" then
     error("Can't determine boot drive")
   end
-  print("Parsing CONFIG.SYS...")
   local configLoc = convertPath(parsePath("\\CONFIG.SYS"))
   parseConfig(configLoc)
-  print("Starting shell (" .. environment.SHELL .. ")...")
   executeProgram(environment.SHELL)
 end
 

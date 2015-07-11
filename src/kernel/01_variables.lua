@@ -54,9 +54,7 @@ local configDirectives = { -- CONFIG.SYS directives.
   },
   SHELL = { -- Sets the shell.
     invoke = function(restOfLine)
-      print("Setting SHELL to " .. restOfLine)
       environment.SHELL = restOfLine
-      print("SHELL set to " .. environment.SHELL)
     end
   },
   SET = {
