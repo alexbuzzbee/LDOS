@@ -37,6 +37,11 @@ local devices = { -- Device virtual files.
   },
 }
 
+local environment = { -- Environment variables. Shared between all programs.
+  SHELL = "\\COMMAND.COM", -- The set shell. Started when no other programs are running.
+  BOOTDRIVE = "", -- The boot drive.
+}
+
 local configDirectives = { -- CONFIG.SYS directives.
   DEVICE = { -- Loads a device driver.
     invoke = function(restOfLine)
@@ -49,7 +54,9 @@ local configDirectives = { -- CONFIG.SYS directives.
   },
   SHELL = { -- Sets the shell.
     invoke = function(restOfLine)
+      print("Setting SHELL to " .. restOfLine)
       environment.SHELL = restOfLine
+      print("SHELL set to " .. environment.SHELL)
     end
   },
   SET = {
@@ -73,9 +80,4 @@ local currentDirs = {
   A = "\\",
   B = "\\",
   C = "\\",
-}
-
-local environment = { -- Environment variables. Shared between all programs.
-  SHELL = "\\COMMAND.COM", -- The set shell. Started when no other programs are running.
-  BOOTDRIVE = "", -- The boot drive.
 }

@@ -21,6 +21,6 @@ local function boot() -- Boots LDOS.
 end
 
 local result, reason = pcall(boot)
-if result == nil then
+if result == false then
   print("Fatal error: " .. reason .. ".")
 end

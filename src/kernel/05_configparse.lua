@@ -11,17 +11,16 @@ end
 
 local function parseConfigLine(line) -- Parses a configuration line.
   print(line)
-  local name, restOfLine = string.match(line, "(.*?)=(.*?)")
+  local name, restOfLine = string.match(line, "(.+)=(.+)")
   if name == nil then
     return false, "Invalid configuration line: '" .. line .. "'."
   end
-  executeConfigDirective(name, restOfLine)
-  return true
+  return executeConfigDirective(name, restOfLine)
 end
 
 local function parseConfigContents(contents) -- Parses the contents of CONFIG.SYS.
   print("Contents are '" .. contents .. "'")
-  for line in string.gmatch(contents, "(.*?)[\n$]") do
+  for line in string.gmatch(contents, "(.+)\n") do
     local success, reason = parseConfigLine(line)
     if not success then
       print("Warning: " .. reason)
