@@ -104,7 +104,7 @@ local apiCalls = {
   },
 }
 
-function dos(callName, ...) -- Calls the LDOS API.
+function _G.dos(callName, ...) -- Calls the LDOS API.
   if apiCalls[callName] ~= nil then
     return apiCalls[callName].called(...)
   else
