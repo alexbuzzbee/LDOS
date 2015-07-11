@@ -172,7 +172,7 @@ local function dirContents(path) -- Returns a list of files and directories in `
 
     if itemType == "file" then -- Add extra info about files.
       contents[i].size = fs.size(itemBiosPath)
-      contents[i].ext = itemLdosPathObj.ext
+      contents[i].ext = itemLdosPathObj.extension
     end
   end
   return contents
