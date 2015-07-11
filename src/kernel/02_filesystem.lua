@@ -3,7 +3,10 @@
 local openFiles = {}
 
 local function parsePath(path) -- Parse a string path into its drive, directories, the basename, and the extension (using the current drive and path if applicable).
-  local drive = string.match(path, "^([a-zA-Z]):") or currentDrive -- Match the drive.
+  local success, drive = pcall(string.match, path, "^([a-zA-Z]):") -- Match the drive.
+  if not success then
+    drive = currentDrive
+  end
 
   local dirs = {}
   for seperator, dir in string.gmatch(path, "(%\\)?(%w*)%\\") do -- Get the directories it's in.
@@ -23,12 +26,19 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
 
   local name, ext = string.match(path, "%\\?(%w*)%.(%w*)")
 
-  return {
-    drive = string.upper(drive),
-    dirs = dirs,
-    basename = string.upper(name),
-    extension = string.upper(ext),
-  }
+  if ext ~= nil then -- Handle files and directories seperately.
+    return {
+      drive = string.upper(drive),
+      dirs = dirs,
+      basename = string.upper(name),
+      extension = string.upper(ext),
+    }
+  else
+    return {
+      drive = string.upper(drive),
+      dirs = dirs,
+    }
+  end
 end
 
 local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS path, when appropriate.
