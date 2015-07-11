@@ -6,9 +6,9 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
   local drive = string.match(path, "^([a-zA-Z]):") or currentDrive -- Match the drive.
 
   local dirs = {}
-  for seperator, dir in string.gmatch(path, "(\\\\)?(\\w{1,8})\\\\") do -- Get the directories it's in.
+  for seperator, dir in string.gmatch(path, "(%\\)?(%w*)%\\") do -- Get the directories it's in.
     if seperator == "" then -- Add the current directory if there is no seperator at the beginning of the path.
-      for currentDirElement in string.gmatch(currentDirs[currentDrive], "\\\\(\\w{1,8})\\\\") do
+      for currentDirElement in string.gmatch(currentDirs[currentDrive], "%\\(%w*)%\\") do
         table.insert(dirs, string.upper(currentDirElement))
       end
     end
@@ -16,20 +16,18 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
   end
 
   if #dirs == 0 then -- Add the current directory if path has no directories.
-    for currentDirElement in string.gmatch(currentDirs[currentDrive], "\\\\(\\w{1,8})\\\\") do
+    for currentDirElement in string.gmatch(currentDirs[currentDrive], "%\\(%w*)%\\") do
       table.insert(dirs, currentDirElement)
     end
   end
 
-  local name = string.match(path, "\\\\?(\\w{1,8)\\.")
-
-  local ext = string.match(path, "\\.(\\w{1,3})$")
+  local name, ext = string.match(path, "%\\?(%w*)%.(%w*)")
 
   return {
     drive = string.upper(drive),
     dirs = dirs,
     basename = string.upper(name),
-    extension = string.upper(ext)
+    extension = string.upper(ext),
   }
 end
 

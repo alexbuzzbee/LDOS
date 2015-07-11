@@ -10,16 +10,18 @@ local function executeConfigDirective(name, restOfLine) -- Executes a parsed con
 end
 
 local function parseConfigLine(line) -- Parses a configuration line.
+  print(line)
   local name, restOfLine = string.match(line, "(.*?)=(.*?)")
   if name == nil then
-    return false, "Invalid configuration line: " .. line .. "'."
+    return false, "Invalid configuration line: '" .. line .. "'."
   end
   executeConfigDirective(name, restOfLine)
   return true
 end
 
 local function parseConfigContents(contents) -- Parses the contents of CONFIG.SYS.
-  for line in string.gmatch(contents, "(.*?)\\n") do
+  print("Contents are '" .. contents .. "'")
+  for line in string.gmatch(contents, "(.*?)[\n$]") do
     local success, reason = parseConfigLine(line)
     if not success then
       print("Warning: " .. reason)
@@ -28,6 +30,7 @@ local function parseConfigContents(contents) -- Parses the contents of CONFIG.SY
 end
 
 local function parseConfig(path) -- Parses the CONFIG.SYS at the specified BIOS path.
+  print("Parsing CONFIG.SYS at " .. path)
   local f = fs.open(path, "r")
   parseConfigContents(f.readAll())
   f.close()
