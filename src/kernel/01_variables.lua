@@ -62,7 +62,12 @@ local configDirectives = { -- CONFIG.SYS directives.
       environment.SHELL = restOfLine
     end
   },
-  SET = {
+  INSTALL = { -- Executes a program from within CONFIG.SYS
+    invoke = function(restOfLine)
+      executeProgram(restOfLine)
+    end
+  },
+  SET = { -- Sets an environment variable.
     invoke = function(restOfLine)
       local args = {}
       for arg in string.gmatch(restOfLine, "\\s(.*?)|(.*?)\\s") do
