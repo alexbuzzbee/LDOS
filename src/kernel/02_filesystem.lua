@@ -11,7 +11,7 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
   local dirs = {}
   for seperator, dir in string.gmatch(path, "(%\\)?(%w*)%\\") do -- Get the directories it's in.
     if seperator == "" then -- Add the current directory if there is no seperator at the beginning of the path.
-      for currentDirElement in string.gmatch(currentDirs[currentDrive], "%\\(%w*)%\\") do
+      for currentDirElement in string.gmatch(currentDirs[currentDrive], "%\\?(%w*)%\\") do
         table.insert(dirs, string.upper(currentDirElement))
       end
     end
@@ -19,7 +19,7 @@ local function parsePath(path) -- Parse a string path into its drive, directorie
   end
 
   if #dirs == 0 then -- Add the current directory if path has no directories.
-    for currentDirElement in string.gmatch(currentDirs[currentDrive], "%\\(%w*)%\\") do
+    for currentDirElement in string.gmatch(currentDirs[currentDrive], "%\\?(%w*)%\\") do
       table.insert(dirs, currentDirElement)
     end
   end
@@ -93,6 +93,7 @@ end
 local function fclose(handle) -- Closes an open file. Returns true for success, false for failure.
   if openFiles[handle] ~= nil then
     openFiles[handle].close()
+    openFiles[handle] = nil
     return true
   else
     return false
