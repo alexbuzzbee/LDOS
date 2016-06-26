@@ -83,6 +83,9 @@ local configDirectives = { -- CONFIG.SYS directives.
       end
     end
   },
+  REM = { -- Allows comments.
+    invoke = function() end
+  },
 }
 
 local events = { -- Association of string names to function handlers.
