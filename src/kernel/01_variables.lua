@@ -82,6 +82,8 @@ local configDirectives = { -- CONFIG.SYS directives.
 
 local events = { -- Association of string names to function handlers.
   terminate = nil, -- When the running program terminates.
+  idle = nil, -- Idle callout.
+  error = nil, -- When an error occurs inside LDOS.
 }
 
 local currentDrive = "" -- The current drive.
