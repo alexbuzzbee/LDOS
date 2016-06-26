@@ -2,8 +2,8 @@
 
 local dir = fs.getDir(shell.getRunningProgram())
 
-if fs.exists(fs.combine(dir, "LDOS.LSYS")) then
-  shell.run(fs.combine(dir, "LDOS.LSYS"))
+if fs.exists(fs.combine(dir, "LDOS.SYS")) then
+  shell.run(fs.combine(dir, "LDOS.SYS"))
 else
   error("Could not find LDOS.SYS! (Hint: it needs to be in the root directory of your boot disk.)")
 end

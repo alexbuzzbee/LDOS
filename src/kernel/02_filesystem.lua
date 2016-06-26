@@ -51,7 +51,7 @@ local function convertPath(pathObj) -- Converts a parsed LDOS path to a BIOS pat
   end
   if pathObj.basename ~= "" and pathObj.basename ~= nil then -- Don't go insane for directories.
     biosPath = fs.combine(biosPath, pathObj.basename)
-    biosPath = biosPath .. ".L"
+    biosPath = biosPath .. "."
     biosPath = biosPath .. pathObj.extension
   end
   return biosPath
@@ -69,7 +69,7 @@ local function reverseConvertPath(path) -- Converts a BIOS path to an LDOS path 
   local ldosPath = drive .. ":"
   local pathInDrive = string.match(path, driveDir .. "(.*)") -- Get the path inside the drive.
   local ldosDriveLocalPath = string.sub(pathInDrive, "/", "\\\\") -- Replace all forward slashes with backslashes.
-  ldosPath = ldosPath .. string.sub(ldosDriveLocalPath, "\\.L", "\\.")
+  ldosPath = ldosPath .. string.sub(ldosDriveLocalPath, "\\.", "\\.")
   return ldosPath
 end
 
