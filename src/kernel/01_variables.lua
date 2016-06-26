@@ -35,6 +35,11 @@ local devices = { -- Device virtual files.
     read = function() return read() end,
     close = function() end
   },
+  AUX = {
+    write = function() end,
+    read = function() return "" end,
+    close = function() end
+  },
 }
 
 local environment = { -- Environment variables. Shared between all programs.
@@ -64,6 +69,13 @@ local configDirectives = { -- CONFIG.SYS directives.
         table.insert(args, arg)
       end
       environment[args[1]] = table.concat(args, " ", 2) -- Concatinates the arguments together with spaces, then puts it in the specified environment variable.
+    end
+  },
+  AUX = { -- Sets the AUX device.
+    invoke = function(restOfLine)
+      if devices[restOfLine] ~= nil then
+        devices.AUX = devices[restOfLine]
+      end
     end
   },
 }
