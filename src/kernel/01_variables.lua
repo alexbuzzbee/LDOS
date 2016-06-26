@@ -1,6 +1,6 @@
 -- Variables --
 
-local version = {major = 0, minor = 1, fix = 0}
+local version = {major = 0, minor = 4, fix = 1}
 
 --[[
   There is one LDOS-defined drive type: dir, which is simply a physical directory.
