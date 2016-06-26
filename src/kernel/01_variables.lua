@@ -31,8 +31,8 @@ local devices = { -- Device virtual files.
     close = function() end
   },
   CON = {
-    write = function(value) print(value) end,
-    read = function() return read() end,
+    write = function(value) term.write(value) end,
+    readLine = function() return read() end,
     close = function() end
   },
   AUX = {
